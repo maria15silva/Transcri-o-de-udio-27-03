@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcrição de Áudio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  
+    <header>
+        <h1>Transcrição de Áudio</h1>
+        <nav>
+            <ul class="left">
+                <li><a href="https://support.wix.com/pt/article/acessibilidade-tornando-v%C3%ADdeos-e-%C3%A1udio-acess%C3%ADveis"><strong>Home</a></li></strong>
+                <li><a href="https://medium.com/@cabukater/a-import%C3%A2ncia-da-transcri%C3%A7%C3%A3o-de-texto-em-%C3%A1udio-para-a-acessibilidade-cf62e9c0f9c6"><strong>Sobre</a></li></strong>
+                <li><a href="https://support.google.com/accessibility/android/answer/9158064?hl=pt-BR#:~:text=Abra%20o%20app%20Configura%C3%A7%C3%B5es,Selecione%20Abrir%20Transcri%C3%A7%C3%A3o%20instant%C3%A2nea."><strong>Contato</a></li></strong>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="contrastOptions">
+    
+      <button id="blackAndWhite"><strong>Preto e Branco</button></strong>
+      <button id="highContrast"><strong>Alto Contraste</button></strong>
+      <button id="blueContrast"><strong>Azul</button></strong>
+      <button id="greenContrast"><strong>Verde</button></strong>
+      <button id="yellowContrast"><strong>Amarelo</button></strong>
+    </div>
+
+    <button id="startButton">Iniciar Transcrição</button>
+    <div id="transcription"></div>
+
+    <div class="container-wrapper">
+      <div id="main-container">
+    
+    <div class="flex-container">
+      <section class="gridContainer">
+        <div class="mainContent">
+          <div class="categoryCard">
+        <button onclick="toggleVisibility('section1')">Mostrar/Ocultar</button>
+        <div id="section1" class="hidden">
+          <h2>Importância da Transcrição de áudio</h2>
+
+          <div class="figura">
+          <img src="img1.jpeg" alt="Descrição da imagem" class="mainCardImg">
+        </div>
+          <p>Esse recurso não só contempla pessoas com deficiência visual, mas pessoas com déficit de atenção, idosos, pessoas que com TEA (Transtorno do Espectro Autista), etc. Por isso, a audiodescrição é fundamental para garantir a inclusão e a acessibilidade.
+
+           </p>
+           <button onclick="window.location.href='https:transkriptor.com/pt-br/transcricao-de-audio-de-acessibilidade/'">Saiba Mais</button>
+        </div>
+      </div>
+
+         
+      <div class="categoryCard">
+        <button onclick="toggleVisibility('section2')">Mostrar/Ocultar</button>
+        <div id="section2" class="hidden">
+          <h2>Benefícios da Transcrição em áudio</h2>
+
+          <div class="figura">
+            <img src="img2.jpg" alt="Descrição da imagem" class="mainCardImg">
+        </div>
+          <p>A transcrição de texto em áudio é uma forma de tornar o conteúdo de um site acessível a pessoas cegas. Essa transcrição consiste em uma descrição textual do que é dito em um arquivo de áudio.
+
+           </p>
+           <button onclick="window.location.href='https:medium.com/@cabukater/a-import%C3%A2ncia-da-transcri%C3%A7%C3%A3o-de-texto-em-%C3%A1udio-para-a-acessibilidade-cf62e9c0f9c6'">Saiba Mais</button>
+        </div>
+      </div>
+
+      <div class="categoryCard">
+        <button onclick="toggleVisibility('section3')">Mostrar/Ocultar</button>
+        <div id="section3" class="hidden">
+          <h2>Softwares de Transcrição que utilizam IA</h2>
+
+          <div class="figura">
+            <img src="img3.jpg" alt="Descrição da imagem" class="mainCardImg">
+        </div>
+          <p><strong>Google Cloud Speech-to-Text:</strong> Este serviço da Google oferece transcrição de áudio em tempo real com precisão e suporta uma variedade de idiomas e formatos de áudio.
+
+           </p>
+           <button onclick="window.location.href='https:cloud.google.com/speech-to-text?utm_source=google&utm_medium=cpc&utm_campaign=latam-BR-all-pt-dr-BKWS-all-all-trial-e-dr-1707800-LUAC0014873&utm_content=text-ad-none-any-DEV_c-CRE_547331812210-ADGP_Hybrid+%7C+BKWS+-+EXA+%7C+Txt_AI+and+ML-Speech+to+Text-KWID_43700071228558783-kwd-328283965393&utm_term=KW_google%20cloud%20speech%20to%20text-ST_google+cloud+speech+to+text&gad_source=1&gclid=CjwKCAjwkuqvBhAQEiwA65XxQOjUqT6SNaFs7R3MvdRhgp7br32i0fLhM-RJvf9kXyO13JWLsl4eXBoCYgQQAvD_BwE&gclsrc=aw.ds'">Saiba Mais</button>
+        </div>
+      </div>
+    </div>
+      </section>
+    </div>
+  </div>
+</div>
+    
+    <footer>
+        <p>© 2024 – Transcrição de áudio na Acessibilidade - Desenvolvido por Maria Eduarda</p>
+    </footer>
+    
+
+    <script>
+        // Obtém referências para os elementos HTML relevantes
+        const transcription = document.getElementById('transcription');
+        const startButton = document.getElementById('startButton');
+      
+        // Variáveis para controle do reconhecimento de fala
+        let recognizing = false; // Indica se o reconhecimento está ocorrendo
+        let finalTranscript = ''; // Armazena o texto final reconhecido
+      
+        // Verifica se o navegador suporta a API de Reconhecimento de Fala
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
+        // Verifica se a API de Reconhecimento de Fala é suportada
+        if (window.SpeechRecognition) {
+          // Cria uma instância do reconhecimento de fala
+          var recognition = new SpeechRecognition();
+          // Configurações do reconhecimento de fala
+          recognition.continuous = true; // Reconhecimento contínuo
+          recognition.interimResults = true; // Resultados intermediários
+          recognition.lang = 'pt-BR'; // Define o idioma como Português- Brasil
+      
+          // Evento acionado quando o reconhecimento de fala inicia
+          recognition.onstart = function() {
+            recognizing = true; // Define que o reconhecimento está ocorrendo
+            startButton.textContent = 'Parar Transcrição'; // Atualiza o texto do botão
+          };
+      
+          // Evento acionado em caso de erro durante o reconhecimento
+          recognition.onerror = function(event) {
+            console.log('Erro de reconhecimento: ' + event.error); // Registra o erro no console
+          };
+      
+          // Evento acionado quando o reconhecimento de fala termina
+          recognition.onend = function() {
+            recognizing = false; // Define que o reconhecimento não está mais ocorrendo
+            startButton.textContent = 'Iniciar Transcrição'; // Atualiza o texto do botão
+          };
+      
+          // Evento acionado quando resultados de reconhecimento de fala estão disponíveis
+          recognition.onresult = function(event) {   
+            let interimTranscript = ''; // Variável para transcrição intermediária
+            // Itera sobre os resultados do reconhecimento
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                // Se a transcrição for final, adiciona ao texto final
+                finalTranscript += event.results[i][0].transcript;
+              } else {
+                // Caso contrário, é uma transcrição intermediária
+                interimTranscript += event.results[i][0].transcript;
+              }
+            }
+            // Exibe o texto reconhecido ao usuário
+            transcription.textContent = finalTranscript + interimTranscript;
+          };
+      
+          // Adiciona evento de clique ao botão de início/parada da transcrição
+          startButton.addEventListener('click', function() {
+            if (recognizing) {
+              recognition.stop(); // Para o reconhecimento se já estiver ocorrendo
+              return;
+            }
+            // Se não estiver ocorrendo, limpa o texto e inicia o reconhecimento
+            finalTranscript = '';
+            transcription.textContent = '';
+            recognition.start();
+          }, false);
+      
+        } else {
+          // Se a API não é suportada, esconde o botão e exibe uma mensagem
+          startButton.style.visibility = 'hidden';
+          transcription.textContent = 'Seu navegador não suporta a API de reconhecimento de fala.';
+        }
+
+    // Função para mostrar/ocultar seções
+    function toggleVisibility(sectionId) {
+    var section = document.getElementById(sectionId);
+    if (section.style.display === 'none' || section.style.display === '') {
+      section.style.display = 'block';
+    } else {
+      section.style.display = 'none';
+    }
+  }
+
+  const blackAndWhiteBtn = document.getElementById('blackAndWhite');
+    const highContrastBtn = document.getElementById('highContrast');
+    const blueContrastBtn = document.getElementById('blueContrast');
+    const greenContrastBtn = document.getElementById('greenContrast');
+    const yellowContrastBtn = document.getElementById('yellowContrast');
+
+    blackAndWhiteBtn.addEventListener('click', function() {
+      document.body.classList.remove('high-contrast', 'blue-contrast', 'green-contrast', 'yellow-contrast');
+      document.body.classList.add('black-and-white');
+    });
+
+    highContrastBtn.addEventListener('click', function() {
+      document.body.classList.remove('black-and-white', 'blue-contrast', 'green-contrast', 'yellow-contrast');
+      document.body.classList.add('high-contrast');
+    });
+
+    blueContrastBtn.addEventListener('click', function() {
+      document.body.classList.remove('high-contrast', 'black-and-white', 'green-contrast', 'yellow-contrast');
+      document.body.classList.add('blue-contrast');
+    });
+
+    greenContrastBtn.addEventListener('click', function() {
+      document.body.classList.remove('high-contrast', 'black-and-white', 'blue-contrast', 'yellow-contrast');
+      document.body.classList.add('green-contrast');
+    });
+
+    yellowContrastBtn.addEventListener('click', function() {
+      document.body.classList.remove('high-contrast', 'black-and-white', 'blue-contrast', 'green-contrast');
+      document.body.classList.add('yellow-contrast');
+    });
+
+    blackAndWhiteBtn.addEventListener('click', function() {
+  document.body.classList.remove('high-contrast', 'blue-contrast', 'green-contrast', 'yellow-contrast');
+  document.body.classList.add('black-and-white');
+
+  // Verifica se a cor de fundo é escura o suficiente para definir o texto como branco
+  if (isDarkColor(getComputedStyle(document.body).backgroundColor)) {
+    document.body.style.color = '#fff'; // Define a cor do texto como branco
+  } else {
+    document.body.style.color = '#000'; // Define a cor do texto como preto
+  }
+});
+
+// Função para verificar se uma cor é escura o suficiente
+function isDarkColor(color) {
+  // Converte a cor de RGB para HSL (matiz, saturação, luminosidade)
+  color = color.substring(4, color.length - 1).replace(/ /g, '').split(',');
+  const hsl = rgbToHsl(parseInt(color[0]), parseInt(color[1]), parseInt(color[2]));
+
+  // Verifica a luminosidade (luminosidade varia de 0 a 1)
+  return hsl[2] < 0.5; // Retorna verdadeiro se a luminosidade for menor que 0.5 (considera como cor escura)
+}
+
+// Função auxiliar para converter RGB para HSL
+function rgbToHsl(r, g, b) {
+  r /= 255, g /= 255, b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0; // Acinzentado
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+
+  return [h, s, l];
+}
+
+      </script>
+</body>
+</html>
